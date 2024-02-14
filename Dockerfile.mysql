@@ -1,17 +1,17 @@
-(* ## Use Ubuntu as the base image *)
+# Use Ubuntu as the base image
 FROM ubuntu:latest
 
-(* # Install MySQL and configure *)
+# Install MySQL and configure
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server && \
     rm -rf /var/lib/apt/lists/*
 
-(* # Expose port 3306 *)
+# Expose port 3306
 EXPOSE 3306
 
-(* # Set MySQL root password (replace 'your_mysql_root_password' with your desired password) *)
+# Set MySQL root password (replace 'your_mysql_root_password' with your desired password)
 RUN echo "mysql-server mysql-server/root_password password your_mysql_root_password" | debconf-set-selections && \
     echo "mysql-server mysql-server/root_password_again password your_mysql_root_password" | debconf-set-selections
 
-(* # Start MySQL service *)
+# Start MySQL service
 CMD ["mysqld_safe"]
